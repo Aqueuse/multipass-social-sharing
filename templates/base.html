@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{baseURL}}/static/css/style.css">
+    {% block stylesheet %}{% endblock %}
+    <link rel="shortcut icon" type="image/ico" href="{{baseURL}}/static/favicon.ico"/>
+    <title>{% block title %}Multipass - social sharing{% endblock %}</title>
+</head>
+<body>
+
+{% block navigation %}
+    <div class="navigation">
+        <button><a style="text-decoration: none;" href="/login">Login</a></button>
+    </div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+<div id=main>
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

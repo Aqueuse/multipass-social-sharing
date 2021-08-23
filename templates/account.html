@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{baseURL}}/static/css/account.css">
+{% endblock %}
+
+
+{% block content %}
+    <form action="'/+{{ username }}+'/account'" method=post>
+        <input type=hidden name=username value={{ username }}/>
+        <label>
+            email :
+            <input type=text name=email value={{ email }}/>
+        </label>
+        <label>
+            password :
+            <input type=text name=password value={{ password }}/>
+        </label>
+    </form>
+{% endblock %}

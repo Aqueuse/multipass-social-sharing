@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{baseURL}}/static/css/cubiAdmin.css">
+    <link rel="stylesheet" href="{{baseURL}}/static/css/style.css">
+    <link rel="shortcut icon" type="image/ico" href="{{baseURL}}/static/favicon.ico"/>
+</head>
+<body>
+
+<script src="{{baseURL}}/static/js/cubiAdmin.js"></script>
+
+<div class="cubi-nav">
+    <a class="button-nav button-home" href="/">Accueil</a>
+    <a class="button-nav logout-button" href="/cubi/logout">Logout</a>
+    <a class="button-nav create_collection_link" onclick="generate_collection_form()">New collection</a>
+</div>
+
+<div class="collections-container">
+{% for collection in collections_name %}
+    <div class="box">
+        <form action="/" method="POST">
+            <span onclick="edit_field('collection-{{loop.index0}}')"><label
+                    for="collection-{{loop.index0}}"></label><input class="input-collection-name" id="collection-{{loop.index0}}" type="text" disabled name="new_collection_name" value="{{ collection }}"></span>
+            <input type="hidden" name="collection_name" value="{{collection}}">
+            <button type="submit" formaction="/cubi/admin/collection/rename">&#9998;</button>
+            <button type="submit" formaction="/cubi/admin/collection/delete">-</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" formaction="/cubi/admin/item/create">+</button>
+        </form>
+    {% for item in collections_ids[loop.index0] %}
+    <div class="box-collection-item" onclick="show_item('{{collection}}', '{{item}}')">{{ item }}</div>
+    {% endfor %}
+    </div>
+{% endfor %}
+</div>
+
+<div id="form-container" class='form-container'>
+    <pre id="editor"></pre>
+    <form action="/" method="POST" id="item-form" onsubmit="copy_json_data_to_form()">
+        <input id="collection" type=hidden name=collection_name>
+        <input id="id" type=hidden name=id>
+        <input id="data" type=hidden name=data>
+
+        <button style="display: none" id="collection-create-submit" type="submit" value= "create" formaction="/cubi/admin/collection/create">create</button>
+        <button style="display: inline-block" id="item-update-submit" type="submit" value= "update" formaction="/cubi/admin/item/update">update</button>
+        <button style="display: inline-block" id="item-delete-submit"  type="submit" value= "delete" formaction="/cubi/admin/item/delete">delete</button>
+     </form>
+</div>
+
+<script src="{{baseURL}}/static/js/ACE/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    const editor = ace.edit("editor");
+    editor.setTheme("ace/theme/xcode");
+    editor.session.setMode("ace/mode/json");
+</script>
+
+<div class="footer">Made with <a href="https://github.com/Aqueuse/ours-agile-cubi">Cubi</a></div>
+
+</body>
+</html>

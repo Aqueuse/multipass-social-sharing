@@ -1,0 +1,115 @@
+@font-face {
+    font-family: roboto;
+    src: url(../font/roboto/Roboto-Regular.ttf);
+}
+
+* { box-sizing:border-box }
+
+body {
+    font-family: roboto, serif;
+    overflow: hidden;
+    background-color: white;
+    color: #30043d;
+}
+
+/* login page */
+
+.logout-button {
+    margin-right: auto;
+}
+
+/* administration page */
+
+.cubi-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+.form-container {
+    position: absolute;
+    right: 0;
+    margin: 3%;
+    width: 45%;
+    height: 50%;
+    background-color: aliceblue;
+    display: none;
+}
+
+.input-collection-name {
+    cursor: text;    
+}
+
+.collections-container {
+    background-color: #e54059;
+    color: white;
+    position: absolute;
+    left: 0;
+    margin: 3%;
+    padding: 4px;
+    width: 45%;
+    border-radius: 4px;
+}
+
+.box {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.box-collection-name {
+    background-color: #cbe1ff;
+    margin: 0;
+}
+
+.box-collection-item:hover {
+    background-color: #8e1f51;
+}
+
+#editor {
+    margin: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ace_content {
+    background-color: #F7DEDD;
+}
+.ace_folding-enabled {
+    background-color: #EAA5A2;
+}
+
+.button-nav {
+    padding: 7px;
+    background-color: #8e1f51;
+    color: white;
+    text-decoration: none;
+}
+
+.button-nav:hover {
+    color: #441f0b;
+    background-color: #c98345;
+    cursor: pointer;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: right;
+    padding: 10px;
+    min-height: 40px;
+    background-color: #8e1f51;
+    color: white;
+}
+
+.footer a {
+    color:white;
+}

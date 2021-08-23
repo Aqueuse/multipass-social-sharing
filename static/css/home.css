@@ -1,0 +1,24 @@
+.welcome-message-container {
+    display: flex;
+    align-items: center;
+    min-height: 15em;
+    justify-content: center;
+}
+
+.welcome-message {
+    flex: none;
+    max-width: 50%;
+    text-align: center;
+    font-size: xx-large;
+}
+
+.description-blocks-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.description-block > p {
+    text-align: center;
+}

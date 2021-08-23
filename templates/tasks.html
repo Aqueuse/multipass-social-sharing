@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ baseURL }}/static/css/tasks.css" xmlns="http://www.w3.org/1999/html">
+{% endblock %}
+
+{% block navigation %}
+    <div class="navigation">
+        <button><a style="text-decoration: none;" href="/logout">Logout</a></button>
+    </div>
+{% endblock %}
+
+{% block content %}
+<script src="{{ baseURL }}/static/js/tasks.js"></script>
+<div class=resume-container>
+    {% for key, value in dict_tasks_summary.items() %}
+    <div class="resume {{ key }}-resume">
+        <h3 class="resume-title">{{ key|capitalize }}</h3>
+        {% if value|length == 0 %}
+            <button class="schedule-button"><a href="/{{ username }}/{{ key }}/create"><strong>+</strong> Schedule</a></button>
+            <p class=task-empty>You don't have any post in {{ key|capitalize }}</p>
+        {% endif %}
+        {% if value|length > 0 %}
+            {% for subelement in value %}
+                <div>
+                    {{ subelement.taskname }} | {{ subelement.repetition.type }}
+                    <button id="{{ key }}-{{ subelement.taskid }}-task-button" class="show-task-fields" onclick="taskSwitch('{{ key }}', '{{ subelement.taskid }}')">◁</button>
+                </div>
+                <div id="{{ key }}-{{ subelement.taskid }}-task-block" class="task-block" style="display: none">
+                <form  enctype="multipart/form-data" method="post">
+                    <input type=text class="task-field" name="task_name" value="{{ subelement.taskname }}">
+                    <div class="task-container">
+                        <input type=date name=date value="{{ subelement.date }}">
+                        <input type=time name=time value={{ subelement.time }}>
+                    </div>
+                    <label>Repetition :
+                        <select id="{{ key }}-{{ subelement.taskid }}-repetition" name="repetition_type" onchange="showPeriods('{{ key }}', '{{ subelement.taskid }}')">
+                            <option value="{{ subelement.repetition.type }}" selected>current : {{ subelement.repetition.type }}</option>
+                            <option value="daily">daily</option>
+                            <option value="weekly">weekly</option>
+                            <option value="monthly">monthly</option>
+                            <option value="custom">custom</option>
+                        </select>
+                    </label>
+                    <div class="period-selecter">
+                        <div style="display:none;" id="{{ key }}-{{ subelement.taskid }}-months">
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-JAN" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'JAN')">JAN</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-FEB" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'FEB')">FEB</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-MAR" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'MAR')">MAR</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-APR" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'APR')">APR</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-MAY" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'MAY')">MAY</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-JUN" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'JUN')">JUN</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-JUL" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'JUL')">JUL</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-AUG" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'AUG')">AUG</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-SEP" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'SEP')">SEP</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-OCT" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'OCT')">OCT</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-NOV" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'NOV')">NOV</span>
+                            <span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-DEC" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'months', 'DEC')">DEC</span>
+                            <input id="{{ key }}-{{ subelement.taskid }}-task-months" type=hidden name="months" value="{{ subelement.repetition.months }}">
+                        </div>
+                    </div>
+                    <div class="period-selecter">
+                        <div style="display:none;" id="{{ key }}-{{ subelement.taskid }}-days">
+                            <label><span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-MO" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'days', 'MO')">MO</span></label>
+                            <label><span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-TU" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'days', 'TU')">TU</span></label>
+                            <label><span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-WE" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'days', 'WE')">WE</span></label>
+                            <label><span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-TH" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'days', 'TH')">TH</span></label>
+                            <label><span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-FR" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'days', 'FR')">FR</span></label>
+                            <label><span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-SA" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'days', 'SA')">SA</span></label>
+                            <label><span style="background-color: lightsteelblue" id="{{ key }}-{{ subelement.taskid }}-span-SU" class="round-span" onclick="switchElement('{{ key }}', '{{ subelement.taskid }}', 'days', 'SU')">SU</span></label>
+                            <input id="{{ key }}-{{ subelement.taskid }}-task-days" type=hidden name="days" value="{{ subelement.repetition.days }}">
+                        </div>
+                    </div>
+                    <textarea name=message class="task-field">{{ subelement.message }}</textarea><br>
+                    <input
+                            id="{{ key }}-{{ subelement.taskid }}-images-input"
+                            class="task-field"
+                            type=file multiple="" name="files[]"
+                            onchange="updateImagesList('{{ key }}', '{{ subelement.taskid }}')"
+                    ><br>
+                    <button type="button" id="remove-images-button" onclick="removeImagesFromList('{{ key }}', '{{ subelement.taskid }}')">remove images</button>
+                    <div id="{{ key }}-{{ subelement.taskid }}-images-list">
+                        {% for element in subelement.imagesList %}
+                            <div class="task-image">{{ element }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="task-container">
+                        <input type=submit formaction="/{{ username }}/{{ key }}/{{ subelement.taskid }}/delete" value="delete">
+                        <input class="task-duplicate" type=submit formaction="/{{ username }}/{{ key }}/{{ subelement.taskid }}/duplicate" value="duplicate">
+                        <input class="task-submit" type=submit formaction="/{{ username }}/{{ key }}/{{ subelement.taskid }}/edit" value="update">
+                    </div>
+                </form>
+                </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

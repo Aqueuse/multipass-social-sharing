@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{baseURL}}/static/css/style.css">
+{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block content %}
+    <div class="pageContainer" id="container">
+    <form action="/login" method="post" id="formLogin">
+        <div class="login">
+            <h3>Connexion</h3>
+            <label for="identifiantAreaId"></label>
+            <input
+                    type="text" class="identifiantArea"
+                    id="identifiantAreaId" name="identifiant"
+                    placeholder="Identifiant" autocomplete="username"
+            />
+            <br>
+            <br>
+            <label for="passwordAreaId"></label>
+            <input
+                    type="password" class="passwordArea"
+                    id="passwordAreaId" name="password"
+                    placeholder="Password" autocomplete="current-password"
+            />
+            <br>
+            <br>
+            <input class="loginBtn" type="submit" value="connexion"/>
+        </div>
+    </form>
+</div>
+{% endblock %}

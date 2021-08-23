@@ -1,0 +1,119 @@
+.resume-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.resume {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 7px;
+}
+
+.resume-title {
+    text-align: center;
+}
+
+.resume > div {
+    text-align: right;
+    margin: 0;
+}
+
+.task-empty {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.schedule-button {
+    float: right;
+}
+
+.schedule-button > a {
+   text-decoration: none;
+   color : darkslateblue;
+}
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-block {
+    margin-bottom: 10px;
+}
+
+.task-field {
+    width: 100%;
+}
+
+.task-image {
+    border-bottom: 1px solid cornflowerblue;
+}
+
+.task-duplicate {
+    margin-left: auto;
+}
+
+.period-selecter {
+    display: flex;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width: max-content;
+    border-radius: 5px;
+}
+
+.round-span {
+    display: block;
+    width: 3em;
+    height: 3em;
+    line-height: 2em;
+    border-radius: 50%;
+    padding: 7px;
+    margin: 2px;
+    text-align: center;
+    font-family: Arial, serif;
+    font-weight: bold;
+    font-size: small;
+    background-color: lightsteelblue;
+    cursor: pointer;
+}
+
+.round-span > p {
+    text-align: center;
+
+}
+
+.task-submit {
+    float: right;
+}
+
+.twitter-resume {
+    background-color: #A3D9FA;
+}
+
+.twitter-resume > p, .twitter-resume > div {
+    background-color: #DEEDFE;
+}
+
+.facebook-resume {
+    background-color: #71B4FD;
+}
+
+.facebook-resume > p, .facebook-resume > div {
+    background-color: #CDE4FE;
+}
+
+.instagram-resume {
+    background-color: #E7A5DA;
+}
+
+.instagram-resume > p, .instagram-resume > div {
+    background-color: #F7DDF1;
+}
+
