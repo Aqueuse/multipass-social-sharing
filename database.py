@@ -22,8 +22,11 @@ def delete_user(username):
 
 
 def get_user_email(username):
-    print("email "+username)
-    return None
+    user = cubiDB.get_item_by_filter('socialSharing', {'username': username})
+    if len(user) > 0:
+        return user["email"]
+    else:
+        return "user not found"
 
 # ---------------- tasks -------------------- #
 

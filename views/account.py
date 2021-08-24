@@ -10,7 +10,7 @@ account_edit_blueprint = Blueprint('task_edit', __name__,)
 @account_blueprint.route('/<username>/account', methods=['GET'])
 def route_to_account(username):
     email = database.get_user_email(username)
-    return render_template('account.html', baseurl=settings.BASEURL, username=username, email=email)
+    return render_template('userAccount.html', baseurl=settings.BASEURL, username=username, email=email)
 
 
 @account_edit_blueprint.route('/<username>/account', methods=['POST'])

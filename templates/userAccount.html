@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ baseURL }}/static/css/account.css">
+{% endblock %}
+
+{% block navigation %}
+    <div class="navigation">
+        <button><a style="text-decoration: none;" href="/logout">Logout</a></button>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <form action="'/+{{ username }}+'/account'" method=post>
+        <input type=hidden name=username value={{ username }}/>
+        <label>
+            email :
+            <input type=text name=email value={{ email }}/>
+        </label><br>
+        <label>
+            password :
+            <input type=text name=password value={{ password }}/>
+        </label>
+    <input type=submit value="modifier">
+    </form>
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '2995216554030013',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v11.0'
+            });
+        };
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+    <script>
+        document.getElementById('login-button').onclick = function () {
+            FB.login(
+                function (response) {
+                    Log.info('FB.login response', response);
+                },
+                { scope: 'manage_pages, pages_show_list, instagram_basic, pages_read_engagement, pages_manage_posts, public_profile' }
+            );
+            return false;
+        }
+    </script>
+
+    <div id="login-button" class="fb-login-button" data-scope="email, manage_pages" data-max-rows="1" data-size="medium"></div>
+
+{% endblock %}
