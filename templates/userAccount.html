@@ -11,12 +11,8 @@
 {% endblock %}
 
 {% block content %}
-    <form action="'/+{{ username }}+'/account'" method=post>
-        <input type=hidden name=username value={{ username }}/>
-        <label>
-            email :
-            <input type=text name=email value={{ email }}/>
-        </label><br>
+    <form action="/account" method=post>
+        <input type=hidden name=email value={{ email }}/><br>
         <label>
             password :
             <input type=text name=password value={{ password }}/>
@@ -34,6 +30,7 @@
             });
         };
     </script>
+
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
     <script>

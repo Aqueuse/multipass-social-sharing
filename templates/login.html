@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{{baseURL}}/static/css/style.css">
-{% endblock %}
-
 {% block navigation %}{% endblock %}
 
 {% block content %}
@@ -11,11 +7,11 @@
     <form action="/login" method="post" id="formLogin">
         <div class="login">
             <h3>Connexion</h3>
-            <label for="identifiantAreaId"></label>
+            <label for="emailAreaId"></label>
             <input
                     type="text" class="identifiantArea"
-                    id="identifiantAreaId" name="identifiant"
-                    placeholder="Identifiant" autocomplete="username"
+                    id="emailAreaId" name="email"
+                    placeholder="email" autocomplete="email"
             />
             <br>
             <br>

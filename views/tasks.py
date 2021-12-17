@@ -1,10 +1,9 @@
+import datetime
 import os
-import time
 
 from flask import Blueprint, render_template, redirect, request
 from werkzeug.utils import secure_filename
 
-import cubiDB
 import database
 import settings
 
@@ -19,116 +18,117 @@ task_edit_blueprint = Blueprint('task_edit', __name__, )
 task_delete_blueprint = Blueprint('task_delete', __name__, )
 
 task = {
-    "date": time.strftime("%Y-%m-%d"),
+    "date": datetime.datetime.now().replace(second=0, microsecond=0).isoformat(),
     "imagesList": [],
     "message": "mon message",
     "repetition": {
         "days": "MO,TU,WE,TH, FR, SA, SU",
         "months": "JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC",
-        "type": "weekly"
+        "frequency": "weekly"
     },
-    "taskid": 0,
-    "taskname": "mon Premier Post",
-    "time": "20:00"
+    "id": 0,
+    "taskname": "mon Premier Post"
 }
 
 
-@tasks_blueprint.route('/<username>/dashboard', methods=['GET'])
-def route_to_user_tasks(username):
+@tasks_blueprint.route('/dashboard', methods=['GET'])
+def route_to_user_tasks():
     if request.cookies.get('userID') == secret:
-        dict_tasks_summary = database.get_tasks_summary(username)
+        email = request.cookies.get('email')
+        dict_tasks_summary = database.get_tasks_summary(email)
         return render_template(
             'tasks.html',
-            baseurl=settings.BASEURL,
-            username=username,
+            baseurl=baseURL,
+            email=email,
             dict_tasks_summary=dict_tasks_summary
         )
     else:
         return redirect(baseURL + "login")
 
 
-@task_create_blueprint.route('/<username>/<social_network>/create', methods=['GET'])
-def route_to_create_task(username, social_network):
+@task_edit_blueprint.route('/<social_network>/edit', methods=['POST'])
+def route_to_edit_task(social_network):
     if request.cookies.get('userID') == secret:
-        tasks = cubiDB.get_item_by_filter("socialSharing", {"username": username})
-        id = tasks["id"]
-        tasks[social_network].append(task)
-        database.update_tasks(id, tasks)
-        return redirect("/" + username + "/dashboard")
-    else:
-        return redirect(baseURL)
-
-
-@task_edit_blueprint.route('/<username>/<social_network>/<taskid>/edit', methods=['POST'])
-def route_to_edit_task(username, social_network, taskid):
-    if request.cookies.get('userID') == secret:
+        print(request.form)
         social_network = social_network
+        email = request.cookies.get('email')
+        id = request.form["id"]
         message = request.form["message"]
-        task_name = request.form["task_name"]
+        taskname = request.form["taskname"]
         date = request.form["date"]
-        task_time = request.form["time"]
-        repetition_type = request.form["repetition_type"]
+        repetition_frequency = request.form["repetition_frequency"]
         days = request.form["days"]
         months = request.form["months"]
         files = request.files.getlist("files[]")
 
-        tasks = cubiDB.get_item_by_filter("socialSharing", {"username": username})
-        id = tasks["id"]
+        tasks = database.get_item_by_filter({"email": email})
         for element in tasks[social_network]:
-            if element["taskid"] == int(taskid):
-                element["taskname"] = task_name
+            if element["id"] == int(id):
+                element["taskname"] = taskname
                 element["message"] = message
                 element["date"] = date
-                element["time"] = task_time
-                element["repetition"]["type"] = repetition_type
+                element["repetition"]["frequency"] = repetition_frequency
                 element["repetition"]["days"] = days
                 element["repetition"]["months"] = months
                 if len(files) > 1:
                     images_list = []
                     for file in files:
-                        file.save(os.path.join(upload_folder, username, secure_filename(file.filename)))
+                        file.save(os.path.join(upload_folder, email, secure_filename(file.filename)))
                         images_list.append(secure_filename(file.filename))
                     element["imagesList"] = images_list
                 if len(files) <= 1:
                     element["imagesList"] = []
-        database.update_tasks(id, tasks)
-        return redirect("/" + username + "/dashboard")
+        database.update_tasks(email, tasks)
+        return redirect("/dashboard")
     else:
         return redirect(baseURL)
 
 
-@task_duplicate_blueprint.route('/<username>/<social_network>/<taskid>/duplicate', methods=['POST'])
-def route_to_duplicate_task(username, social_network, taskid):
+@task_duplicate_blueprint.route('/<social_network>/duplicate', methods=['POST'])
+def route_to_duplicate_task(social_network):
     if request.cookies.get('userID') == secret:
-        tasks = cubiDB.get_item_by_filter("socialSharing", {"username": username})
-        id = tasks["id"]
+        email = request.cookies.get('email')
+        id = request.form['id']
+        tasks = database.get_item_by_filter({'email': email})
         for element in tasks[social_network]:
-            if element["taskid"] == int(taskid):
+            if element['id'] == int(id):
                 duplicate_task = {
-                    "taskname": element["taskname"],
-                    "message": element["message"],
-                    "date": element["date"],
-                    "time": element["time"],
-                    "repetition": element["repetition"],
-                    "imagesList": element["imagesList"],
-                    "taskid": database.get_max_taskid(tasks[social_network])+1
+                    "taskname": element['taskname'],
+                    "message": element['message'],
+                    "date": element['date'],
+                    "repetition": element['repetition'],
+                    "imagesList": element['imagesList'],
+                    "id": database.get_max_taskid(tasks[social_network])+1
                 }
                 tasks[social_network].append(duplicate_task)
-        database.update_tasks(id, tasks)
-        return redirect("/" + username + "/dashboard")
+        database.update_tasks(email, tasks)
+        return redirect("/dashboard")
     else:
         return redirect(baseURL)
 
 
-@task_delete_blueprint.route('/<username>/<social_network>/<taskid>/delete', methods=['POST'])
-def route_to_delete_task(username, social_network, taskid):
+@task_delete_blueprint.route('/<social_network>/delete', methods=['POST'])
+def route_to_delete_task(social_network):
     if request.cookies.get('userID') == secret:
-        tasks = cubiDB.get_item_by_filter("socialSharing", {"username": username})
-        id = tasks["id"]
+        email = request.cookies.get('email')
+        id = request.form["id"]
+        tasks = database.get_item_by_filter({"email": email})
         for index, element in enumerate(tasks[social_network]):
-            if str(element["taskid"]) == str(taskid):
+            if str(element["id"]) == str(id):
                 tasks[social_network].pop(index)
-        database.update_tasks(id, tasks)
-        return redirect("/" + username + "/dashboard")
+        database.update_tasks(email, tasks)
+        return redirect("/dashboard")
+    else:
+        return redirect(baseURL)
+
+
+@task_create_blueprint.route('/<social_network>/create', methods=['GET'])
+def route_to_create_task(social_network):
+    if request.cookies.get('userID') == secret:
+        email = request.cookies.get('email')
+        tasks = database.get_item_by_filter({"email": email})
+        tasks[social_network].append(task)
+        database.update_tasks(email, tasks)
+        return redirect("/dashboard")
     else:
         return redirect(baseURL)

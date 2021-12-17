@@ -3,15 +3,21 @@ from views.login import login_blueprint, logout_blueprint
 from views.tasks import tasks_blueprint, task_create_blueprint,\
     task_edit_blueprint, task_delete_blueprint, task_duplicate_blueprint
 from views.userAccount import user_account_blueprint
+from flask import Flask
 
-import settings
-import cubi
+from settings import UPLOAD_FOLDER, AUTHORIZED_FILES_TYPE, SECRET
 
-app = cubi.app
+# get HTTPS with Talisman
+# from flask_talisman import Talisman
+
+app = Flask(__name__, static_folder='static')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['ALLOWED_EXTENSIONS'] = AUTHORIZED_FILES_TYPE
+# talisman = Talisman(app, content_security_policy=[])
 
 app.config['UPLOAD_FOLDER'] = '/static/images'
 app.config['SESSION_COOKIE_NAME'] = 'userSession'
-app.config['SECRET_KEY'] = settings.SECRET
+app.config['SECRET_KEY'] = SECRET
 
 app.register_blueprint(home_blueprint)
 app.register_blueprint(login_blueprint)
@@ -23,7 +29,6 @@ app.register_blueprint(task_create_blueprint)
 app.register_blueprint(task_edit_blueprint)
 app.register_blueprint(task_duplicate_blueprint)
 app.register_blueprint(task_delete_blueprint)
-
 
 if __name__ == '__main__':
     app.run()
