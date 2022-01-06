@@ -1,0 +1,25 @@
+<form class="instagram-task-form" enctype="multipart/form-data" method="post">
+    <div id="instagram-{{ task.id }}-task-block">
+        <div class="resume-social-network" onclick="showHideThisTask({{ task.id }}, 'instagram')">
+            <img src="/static/images/social_networks/instagram.svg">
+            <img formaction="/instagram/delete" class="float-right" src="/static/images/close.svg">
+            <img class="float-right" src="/static/images/expand.svg">
+        </div>
+        <div id="instagram-{{ task.id }}-parameters" style="display:block">
+            <textarea name=instagram-message class="task-field instagram-task-message">{{ task.instagram.message }}</textarea>
+            <input
+                id="instagram-{{ task.id }}-images-input"
+                class="task-field"
+                type=file multiple="" name="instagram-files[]"
+                onchange="updateImagesList('instagram', '{{ task.id }}')">
+                <button class=form-submit-button formaction="/instagram/save">save</button>
+                <br>
+            <button type="button" id="remove-images-button" onclick="removeImagesFromList('instagram', '{{ task.id }}')">remove images</button>
+            <div id="instagram-{{ task.id }}-images-list">
+                {% for image in task.instagram.imagesList %}
+                    <div class="task-image">{{ image }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</form>

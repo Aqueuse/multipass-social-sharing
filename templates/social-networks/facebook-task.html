@@ -1,0 +1,25 @@
+<form class="facebook-task-form" enctype="multipart/form-data" method="post">
+    <div id="facebook-{{ task.id }}-task-block">
+        <div class="resume-social-network" onclick="showHideThisTask({{ task.id }}, 'facebook')">
+            <img src="/static/images/social_networks/facebook.svg">
+            <img formaction="/facebook/delete" class="float-right" src="/static/images/close.svg">
+            <img class="float-right" src="/static/images/expand.svg">
+        </div>
+        <div id="facebook-{{ task.id }}-parameters" style="display:block">
+            <textarea name=facebook-message class="task-field facebook-task-message">{{ task.facebook.message }}</textarea>
+            <input
+                id="facebook-{{ task.id }}-images-input"
+                class="task-field"
+                type=file multiple="" name="facebook-files[]"
+                onchange="updateImagesList('facebook', '{{ task.id }}')">
+                <button class=form-submit-button formaction="/facebook/save">save</button>
+                <br>
+            <button type="button" id="remove-images-button" onclick="removeImagesFromList('facebook', '{{ task.id }}')">remove images</button>
+            <div id="facebook-{{ task.id }}-images-list">
+                {% for image in task.facebook.imagesList %}
+                    <div class="task-image">{{ image }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</form>
