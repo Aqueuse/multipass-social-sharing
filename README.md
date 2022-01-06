@@ -4,4 +4,4 @@ A web Application to program post in social networks (Facebook, Twitter, Instagr
 
 # To launch it (linux WSL)
 
-python3 -m flask run --port=3000
+gunicorn -c gunicorn.conf.py app:app

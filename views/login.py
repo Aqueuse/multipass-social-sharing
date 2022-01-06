@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, make_response
 
+import app
 import database
 import settings
 

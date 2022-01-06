@@ -8,8 +8,8 @@ import database
 import settings
 
 baseURL = settings.BASEURL
-secret = settings.SECRET
 upload_folder = settings.UPLOAD_FOLDER
+secret = settings.SECRET
 
 tasks_blueprint = Blueprint('user', __name__, )
 task_create_blueprint = Blueprint('task_create', __name__, )
@@ -49,7 +49,6 @@ def route_to_user_tasks():
 @task_edit_blueprint.route('/<social_network>/edit', methods=['POST'])
 def route_to_edit_task(social_network):
     if request.cookies.get('userID') == secret:
-        print(request.form)
         social_network = social_network
         email = request.cookies.get('email')
         id = request.form["id"]
@@ -63,7 +62,7 @@ def route_to_edit_task(social_network):
 
         tasks = database.get_item_by_filter({"email": email})
         for element in tasks[social_network]:
-            if element["id"] == int(id):
+            if element["id"] == float(id):
                 element["taskname"] = taskname
                 element["message"] = message
                 element["date"] = date
@@ -91,7 +90,7 @@ def route_to_duplicate_task(social_network):
         id = request.form['id']
         tasks = database.get_item_by_filter({'email': email})
         for element in tasks[social_network]:
-            if element['id'] == int(id):
+            if element['id'] == float(id):
                 duplicate_task = {
                     "taskname": element['taskname'],
                     "message": element['message'],
@@ -114,7 +113,7 @@ def route_to_delete_task(social_network):
         id = request.form["id"]
         tasks = database.get_item_by_filter({"email": email})
         for index, element in enumerate(tasks[social_network]):
-            if str(element["id"]) == str(id):
+            if element["id"] == float(id):
                 tasks[social_network].pop(index)
         database.update_tasks(email, tasks)
         return redirect("/dashboard")

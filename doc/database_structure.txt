@@ -1,0 +1,29 @@
+############# DB tree ###################
+
+
+multipass
+     |____ users { [
+            "_id" : ObjectId("61c424e14444e58696c5fe90"), 
+            "email" : "jaimaille@gmail.com",
+            "userID": 0,
+            "password" : "$5$rounds=535000$CYFKTHiYl4Nh7.rW$Iv4Mxmk65KBpFP0PgYlGSCUEm/YfvqSjLGJTDBMpXeA",   // secret !
+            "facebook" : [ 
+              { 
+                "date" : "2019-12-17T16:44",   // isoDate
+                "imagesList" : [ ],   // filenames
+                "message" : "mon message", 
+                "repetition" : { 
+                    "days" : "MO,TU,WE,TH, FR, SA, SU", 
+                    "months" : "JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC", 
+                    "frequency" : "daily" 
+                },
+                "id" : 0,  // will be forcly converted by mongo in float BECAUSE
+                "taskname" : "mon Premier Post" 
+              } 
+            ],
+            "twitter" : [], 
+            "instagram" : []
+          } ]
+     |____ activity
+
+
