@@ -35,7 +35,7 @@ task = {
 def route_to_user_tasks():
     if request.cookies.get('userID') == secret:
         email = request.cookies.get('email')
-        dict_tasks_summary = database.get_tasks_summary(email)
+        dict_tasks_summary = database.get(email)
         return render_template(
             'tasks.html',
             baseurl=baseURL,

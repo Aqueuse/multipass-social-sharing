@@ -17,5 +17,5 @@ def route_to_account(username):
 def route_to_edit_account(username):
     email = request.form["email"]
     password = request.form["password"]
-    database.update_user(username, email, password)
+    database.update_user(username, email)
     return render_template('tasks.html', baseurl=settings.BASEURL, validation_message="user account updated")

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="3.211.220.169" id="752c8912-f9aa-4835-b8dc-45aba329b565" keyPath="\\wsl$\Ubuntu-20.04\home\llo\.ssh\LightsailDefaultKey-us-east-1.pem" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" />
+    </configs>
+  </component>
+</project>

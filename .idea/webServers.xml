@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8dae2956-8dd7-41cb-9f9d-69924cf9f165" name="multipass">
+        <fileTransfer accessType="SFTP" host="3.211.220.169" port="22" sshConfigId="752c8912-f9aa-4835-b8dc-45aba329b565" sshConfig="ubuntu@3.211.220.169:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
