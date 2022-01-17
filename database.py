@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 
-engine = create_engine('sqlite:///C:\\Users\\jaima\\Desktop\\multipass.db')
+engine = create_engine('sqlite:////srv/multipass.db')
 
 database = declarative_base(bind=engine)
 database.metadata.create_all()
@@ -35,7 +35,7 @@ def get_user(email):
 
 def validate_user(email, password):
     user_query = get_user(email)
-    if len(user_query) == 0:
+    if user_query is None:
         return False
     else:
         stored_password = user_query.password
@@ -64,6 +64,28 @@ def create_basic_task(user_id, name, date, repetition, days, months):
     BasicTask.create_basic_task(task_id, user_id, name, date, repetition, days, months)
 
 
+def get_user_tasks(email):
+    user_tasks = BasicTask.get_user_basic_tasks(email)
+    for task in user_tasks:
+        task["facebook"] = FacebookTask.get_facebook_task(task.task_id)
+        task["twitter"] = TwitterTask.get_twitter_task(task.task_id)
+        task["instagram"] = InstagramTask.get_instagram_task(task.task_id)
+    return user_tasks
+
+
+def update_task(user_id, tasks):
+    BasicTask.create_database_if_not_exist()
+    task = BasicTask.get_basic_task(task_id)
+    if task.user_id == task_id:
+        BasicTask.edit_basic_task(task_id, user_id, name, date, repetition, days, months)
+    if tasks["facebook"]:
+        FacebookTask.update_facebook_task(task_id, name, date, repetition, days, months)
+    if tasks["twitter"]:
+        TwitterTask.update_twitter_task(task_id, name, date, repetition, days, months)
+    if tasks["instagram"]:
+        InstagramTask.update_instagram_task(task_id, name, date, repetition, days, months)
+
+
 def delete_basic_task(task_id):
     BasicTask.delete_basic_task(task_id)
     if FacebookTask.facebook_task_exist(task_id):
@@ -72,15 +94,6 @@ def delete_basic_task(task_id):
         TwitterTask.delete_twitter_task(task_id)
     if InstagramTask.instagram_task_exist(task_id):
         InstagramTask.delete_instagram_task(task_id)
-
-
-def get_user_tasks(user_id):
-    basic_tasks = BasicTask.get_user_basic_tasks(user_id)
-    for task in basic_tasks:
-        task["facebook"] = FacebookTask.get_facebook_task(task.task_id)
-        task["twitter"] = TwitterTask.get_twitter_task(task.task_id)
-        task["instagram"] = InstagramTask.get_instagram_task(task.task_id)
-    return basic_tasks
 
 
 def get_max_task_id():

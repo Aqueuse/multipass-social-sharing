@@ -1,5 +1,27 @@
+function initFront(taskid) {
+    let taskDay = document.getElementById(taskid+"-task-days");
+    let taskMonth = document.getElementById(taskid+"-task-months");
+
+    let valueDays = taskDay.value.split(",").map(x => x.trim());
+    let valueMonths = taskMonth.value.split(",").map(x => x.trim());
+
+    showPeriods(taskid);
+
+    if (valueDays.length > 1) {
+        for (let i = 0; i < valueDays.length; i++) {
+            document.getElementById(taskid + "-span-" + valueDays[i]).style.backgroundColor = "lightskyblue";
+        }
+    }
+
+    if (valueMonths.length > 1) {
+        for (let i = 0; i < valueMonths.length; i++) {
+            document.getElementById(taskid + "-span-" + valueMonths[i]).style.backgroundColor = "lightskyblue";
+        }
+    }
+}
+
+
 function showHideAllTasks(taskid) {
-    console.log("showHideAllTasks");
     let taskBlock = document.getElementById("task-"+taskid+"-expanded");
     let taskButton = document.getElementById("task-"+taskid+"-button");
     let taskLogo = document.getElementById("resume-social-networks-icons");
@@ -31,27 +53,27 @@ function showHideThisTask(taskid, socialNetwork) {
     }
 }
 
-function initFront(taskid) {
-    let taskDay = document.getElementById(taskid+"-task-days");
-    let taskMonth = document.getElementById(taskid+"-task-months");
+function activeSocialNetwork(taskid, socialNetwork) {
+    document.getElementById("facebook-"+taskid+"-ActivationFlag").setAttribute("value", "True");
 
-    let valueDays = taskDay.value.split(",").map(x => x.trim());
-    let valueMonths = taskMonth.value.split(",").map(x => x.trim());
+    let socialTask = document.getElementById(socialNetwork+"-"+taskid+"-task-block");
+    socialTask.style.display = "block";
 
-    showPeriods(taskid);
+    let taskExpanded = document.getElementById("task-"+taskid+"-expanded");
+    taskExpanded.style.display = "block";
 
-    if (valueDays.length > 1) {
-        for (let i = 0; i < valueDays.length; i++) {
-            document.getElementById(taskid + "-span-" + valueDays[i]).style.backgroundColor = "lightskyblue";
-        }
-    }
-
-    if (valueMonths.length > 1) {
-        for (let i = 0; i < valueMonths.length; i++) {
-            document.getElementById(taskid + "-span-" + valueMonths[i]).style.backgroundColor = "lightskyblue";
-        }
-    }
+    let taskBlockParameters = document.getElementById(socialNetwork+"-"+taskid+"-parameters");
+    taskBlockParameters.style.display = "block";
 }
+
+function unactiveSocialNetwork(taskid, socialNetwork) {
+    document.getElementById("facebook-"+taskid+"-ActivationFlag").setAttribute("value", "False");
+
+    let socialTask = document.getElementById(socialNetwork+"-"+taskid+"-task-block");
+    socialTask.style.display = "none";
+}
+
+
 
 function editTaskname(taskid) {
     let taskname_a = document.getElementById("task-"+taskid+"-name-a");
@@ -71,6 +93,8 @@ function editTaskname(taskid) {
         // change button image to a pen (to edit)
     }
 }
+
+
 
 function showPeriods(taskid) {
     let repeat_chooser = document.getElementById(taskid+"-repetition");
@@ -135,6 +159,7 @@ function removeElement(array, element) {
     }
     return array;
 }
+
 
 
 function updateImagesList(socialNetwork, taskid) {

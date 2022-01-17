@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///C:\\Users\\jaima\\Desktop\\multipass.db')
+engine = create_engine('sqlite:////srv/multipass.db')
 
 database = declarative_base(bind=engine)
 database.metadata.create_all()
@@ -31,6 +31,7 @@ class User(database):
 
 def create_user(email, password):
     new_user = User(email=email, password=password)
+    print("coin")
     session.add(new_user)
     session.commit()
 

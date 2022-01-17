@@ -1,9 +1,12 @@
+import database
 import secrets
 
 from views.home import home_blueprint
 from views.login import login_blueprint, logout_blueprint
-from views.tasks import tasks_blueprint, task_create_blueprint,\
-    task_edit_blueprint, task_delete_blueprint, task_duplicate_blueprint
+from views.tasks import tasks_blueprint, basic_task_create_blueprint,\
+    basic_task_edit_blueprint, basic_task_delete_blueprint, \
+    social_network_task_create_blueprint, social_network_task_edit_blueprint, \
+    social_network_task_delete_blueprint
 from views.userAccount import user_account_blueprint
 from flask import Flask
 
@@ -30,10 +33,12 @@ app.register_blueprint(logout_blueprint)
 app.register_blueprint(user_account_blueprint)
 
 app.register_blueprint(tasks_blueprint)
-app.register_blueprint(task_create_blueprint)
-app.register_blueprint(task_edit_blueprint)
-app.register_blueprint(task_duplicate_blueprint)
-app.register_blueprint(task_delete_blueprint)
+app.register_blueprint(basic_task_create_blueprint)
+app.register_blueprint(basic_task_edit_blueprint)
+app.register_blueprint(basic_task_delete_blueprint)
+app.register_blueprint(social_network_task_create_blueprint)
+app.register_blueprint(social_network_task_edit_blueprint)
+app.register_blueprint(social_network_task_delete_blueprint)
 
 talisman = Talisman(app, content_security_policy=[])
 # no need to run via talisman, run as usual with app.run

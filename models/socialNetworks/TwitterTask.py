@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///C:\\Users\\jaima\\Desktop\\multipass.db')
+engine = create_engine('sqlite:////srv/multipass.db')
 
 database = declarative_base(bind=engine)
 database.metadata.create_all()

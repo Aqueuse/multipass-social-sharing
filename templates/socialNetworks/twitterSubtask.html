@@ -1,0 +1,27 @@
+<div class="twitter-task-block" id="twitter-{{ task.id }}-task-block" style="display: block">
+    <div class="resume-social-network" onclick="showHideThisTask({{task.id}}, 'twitter')">
+        <img src="/static/images/social_networks/twitter.svg">
+        <img onclick="unactiveSocialNetwork({{task.id}}, 'twitter')" class="float-right" src="/static/images/close.svg">
+        <img class="float-right" src="/static/images/expand.svg">
+    </div>
+    <div id="twitter-{{ task.id }}-parameters" style="display:block">
+        <input id="twitter-{{ task.id }}-ActivationFlag" type="hidden" name="twitter-activated" value="False">
+        <textarea name=twitter-message
+                  class="task-field twitter-task-message">{{ task.twitter.message }}</textarea>
+        <input
+                id="twitter-{{ task.id }}-images-input"
+                class="task-field"
+                type=file multiple="" name="twitter-files[]"
+                onchange="updateImagesList('twitter', '{{ task.id }}')">
+        <button type="submit" class=form-submit-button formaction="/twitter/edit">save</button>
+        <br>
+        <button type="button" id="remove-images-button" onclick="removeImagesFromList('twitter', '{{ task.id }}')">
+            remove images
+        </button>
+        <div id="twitter-{{ task.id }}-images-list">
+            {% for image in task.twitter.imagesList %}
+            <div class="task-image">{{ image }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
