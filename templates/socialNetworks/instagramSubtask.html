@@ -1,8 +1,8 @@
 <div class="instagram-task-block" id="instagram-{{ task.id }}-task-block" style="display: block">
     <div class="resume-social-network" onclick="showHideThisTask({{task.id}}, 'instagram')">
-        <img src="/static/images/social_networks/instagram.svg">
-        <img  onclick="unactiveSocialNetwork({{task.id}}, 'instagram')" class="float-right" src="/static/images/close.svg">
-        <img class="float-right" src="/static/images/expand.svg">
+        <img src="/static/images/social_networks/instagram.svg" alt="instagram">
+        <img  onclick="unactiveSocialNetwork({{task.id}}, 'instagram')" class="float-right" src="/static/images/close.svg" alt="remove instagram">
+        <img class="float-right" src="/static/images/expand.svg" alt="expand">
     </div>
     <div id="instagram-{{ task.id }}-parameters" style="display:block">
         <input id="instagram-{{ task.id }}-ActivationFlag" type="hidden" name="instagram-activated" value="False">
@@ -13,7 +13,6 @@
                 class="task-field"
                 type=file multiple="" name="instagram-files[]"
                 onchange="updateImagesList('instagram', '{{ task.id }}')">
-        <button type="submit" class=form-submit-button formaction="/instagram/edit">save</button>
         <br>
         <button type="button" id="remove-images-button" onclick="removeImagesFromList('instagram', '{{ task.id }}')">
             remove images

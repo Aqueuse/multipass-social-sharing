@@ -1,8 +1,8 @@
 <div class="facebook-task-block" id="facebook-{{ task.id }}-task-block" style="display: block">
     <div class="resume-social-network" onclick="showHideThisTask({{ task.id }}, 'facebook')">
-        <img src="/static/images/social_networks/facebook.svg">
-        <img onclick="unactiveSocialNetwork({{task.id}}, 'facebook')" class="float-right" src="/static/images/close.svg">
-        <img class="float-right" src="/static/images/expand.svg">
+        <img src="/static/images/social_networks/facebook.svg" alt="facebook">
+        <img onclick="unactiveSocialNetwork({{task.id}}, 'facebook')" class="float-right" src="/static/images/close.svg" alt="remove facebook">
+        <img class="float-right" src="/static/images/expand.svg" alt="expand">
     </div>
     <div id="facebook-{{ task.id }}-parameters" style="display:block">
         <input id="facebook-{{ task.id }}-ActivationFlag" type="hidden" name="facebook-activated" value="False">
@@ -13,7 +13,6 @@
                 class="task-field"
                 type=file multiple="" name="facebook-files[]"
                 onchange="updateImagesList('facebook', '{{ task.id }}')">
-        <button type="submit" class=form-submit-button formaction="/facebook/edit">save</button>
         <br>
         <button type="button" id="remove-images-button" onclick="removeImagesFromList('facebook', '{{ task.id }}')">
             remove images

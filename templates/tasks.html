@@ -21,7 +21,7 @@
     <div class="task-block">
         <div class=task-resume>
             <form class=time-task-form enctype="multipart/form-data" method="post">
-                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="task_id" value="{{ task.id }}">
                 <div style="display: flex; flex-direction: row">
                     <a class=task-field id="task-{{ task.id }}-name-a" style="display: block">{{ task.taskname }}</a>
                     <textarea id="task-{{ task.id }}-name-area" class="task-field" style="resize: none; display: none" wrap="off" placeholder="task name" name="taskname">{{ task.taskname }}</textarea>
@@ -68,6 +68,7 @@
                 </div>
             <button class="form-submit-button" formaction="/datetime/edit" >save</button>
             </form>
+            <button id="{{task.id}}-save-button" type="submit" formaction="task/update" style="display : inline-block">save</button>
             <button type="submit" formaction="task/delete">❌</button>
             <div class="resume-expand-logo">
                 <div id="resume-social-networks-icons" style="display:block;">

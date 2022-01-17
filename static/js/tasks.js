@@ -64,16 +64,36 @@ function activeSocialNetwork(taskid, socialNetwork) {
 
     let taskBlockParameters = document.getElementById(socialNetwork+"-"+taskid+"-parameters");
     taskBlockParameters.style.display = "block";
+
+    let saveButton = document.getElementById(taskid+"-save-button");
+    saveButton.style = "display: inline-block;";
+    highlight(taskid);
 }
 
 function unactiveSocialNetwork(taskid, socialNetwork) {
-    document.getElementById("facebook-"+taskid+"-ActivationFlag").setAttribute("value", "False");
-
     let socialTask = document.getElementById(socialNetwork+"-"+taskid+"-task-block");
     socialTask.style.display = "none";
+
+    let saveButton = document.getElementById(taskid+"-save-button");
+
+    let facebookTask = document.getElementById("facebook-"+taskid+"-task-block").style.display;
+    let instagramTask = document.getElementById("instagram-"+taskid+"-task-block").style.display;
+    let twitterTask = document.getElementById("twitter-"+taskid+"-task-block").style.display;
+
+    document.getElementById("facebook-"+taskid+"-ActivationFlag").setAttribute("value", "False");
+
+    if (facebookTask == "none" && instagramTask == "none" && twitterTask == "none" ) {
+        saveButton.style = "display: none;";
+    }
+    highlight(taskid);
 }
 
+let redColor = 255;
 
+function highlight(taskid) {
+  document.getElementById(taskid+"-save-button").className = 'highlight';
+  setTimeout(function(){  document.getElementById(taskid+"-save-button").classList.remove("highlight"); }, 400);
+}
 
 function editTaskname(taskid) {
     let taskname_a = document.getElementById("task-"+taskid+"-name-a");
@@ -93,7 +113,6 @@ function editTaskname(taskid) {
         // change button image to a pen (to edit)
     }
 }
-
 
 
 function showPeriods(taskid) {

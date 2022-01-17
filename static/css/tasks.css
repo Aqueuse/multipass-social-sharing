@@ -17,11 +17,49 @@
     width:auto;
 }
 
+.save-button {
+   display : inline-block;
+   background-color: red;
+}
+
+.save-button-blink {
+    display : inline-block;
+    transition: background-color 10s ease-in-out;
+}
+
+@keyframes highlight {
+  0%   {    }
+  50% {
+    background: white;
+  }
+  100%{ }
+}
+
+
+.highlight {
+    background-color:red;
+    -webkit-animation-name: glow;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: 1;
+
+    -moz-animation-name: glow;
+    -moz-animation-duration: 2s;
+    -moz-animation-iteration-count: 1;
+
+    -o-animation-name: glow;
+    -o-animation-duration: 1s;
+    -o-animation-iteration-count: 1;
+
+    animation-name: glow;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
 
 .edit-task-name-image {
     width:2em;
     height:auto;
 }
+
 
 .task-resume {
     display: flex;

@@ -7,7 +7,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-
 engine = create_engine('sqlite:////srv/multipass.db')
 
 database = declarative_base(bind=engine)
@@ -60,7 +59,7 @@ def user_exist(email):
 
 def create_basic_task(user_id, name, date, repetition, days, months):
     BasicTask.create_database_if_not_exist()
-    task_id = BasicTask.get_max_task_id()+1
+    task_id = BasicTask.get_max_task_id() + 1
     BasicTask.create_basic_task(task_id, user_id, name, date, repetition, days, months)
 
 
@@ -73,17 +72,39 @@ def get_user_tasks(email):
     return user_tasks
 
 
-def update_task(user_id, tasks):
+def update_task(email, task):
     BasicTask.create_database_if_not_exist()
-    task = BasicTask.get_basic_task(task_id)
-    if task.user_id == task_id:
-        BasicTask.edit_basic_task(task_id, user_id, name, date, repetition, days, months)
-    if tasks["facebook"]:
-        FacebookTask.update_facebook_task(task_id, name, date, repetition, days, months)
-    if tasks["twitter"]:
-        TwitterTask.update_twitter_task(task_id, name, date, repetition, days, months)
-    if tasks["instagram"]:
-        InstagramTask.update_instagram_task(task_id, name, date, repetition, days, months)
+
+    if BasicTask.basic_task_exist(task["task_id"]):
+        old_task = BasicTask.get_basic_task(task["task_id"])
+        if old_task["user_id"] == email:
+            BasicTask.update_basic_task(
+                task["task_id"],
+                task["task_name"],
+                task["date"],
+                task["repetition"],
+                task["days"],
+                task["months"]
+            )
+
+            if task["facebook"]:
+                FacebookTask.update_facebook_task(
+                    task["task_id"],
+                    task.facebook["message"],
+                    task.facebook["files"]
+                )
+            if task["twitter"]:
+                TwitterTask.update_twitter_task(
+                    task["task_id"],
+                    task.twitter["message"],
+                    task.twitter["files"]
+                )
+            if task["instagram"]:
+                InstagramTask.update_instagram_task(
+                    task["task_id"],
+                    task.instagram["message"],
+                    task.instagram["files"]
+                )
 
 
 def delete_basic_task(task_id):
