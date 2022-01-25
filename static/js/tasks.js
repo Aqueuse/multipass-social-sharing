@@ -88,8 +88,6 @@ function unactiveSocialNetwork(taskid, socialNetwork) {
     highlight(taskid);
 }
 
-let redColor = 255;
-
 function highlight(taskid) {
   document.getElementById(taskid+"-save-button").className = 'highlight';
   setTimeout(function(){  document.getElementById(taskid+"-save-button").classList.remove("highlight"); }, 400);

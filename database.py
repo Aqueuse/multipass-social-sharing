@@ -2,26 +2,27 @@ import datetime
 from passlib.hash import sha256_crypt
 import sqlite3
 
+import social_networks.db_management
+
 connection = sqlite3.connect('/srv/multipass.db')
 
 
 # ------------------ Users ----------------- #
 
-def get_user(email):
+def get_user_password(email):
     global connection
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE email=" + email)
-    user = cursor.fetchall()
-    return user
+    cursor.execute("SELECT * FROM users WHERE email=?", (email,))
+    user = cursor.fetchone()
+    return user[1]
 
 
 def validate_user(email, password):
-    user_query = get_user(email)
-    if user_query is None:
+    password_query = get_user_password(email)
+    if password_query is None:
         return False
     else:
-        stored_password = user_query.password
-        if sha256_crypt.verify(password, stored_password):
+        if sha256_crypt.verify(password, password_query):
             return True
     return False
 
@@ -55,21 +56,82 @@ def user_exist(email):
 
 # ------------------ Tasks ----------------- #
 
-def get_user_tasks(email):
-    cur.execute("SELECT * FROM basicTask WHERE user_id=?", (email,))
+def basic_task_exist(task_id):
+    global connection
     cursor = connection.cursor()
-    cursor.execute()
+    cursor.execute("SELECT * FROM basicTask WHERE task_id=?", (task_id,))
+    basic_task = cursor.fetchall()
 
+    if len(basic_task) == 0:
+        return false
+    return true
+
+
+def get_user_tasks(email):
+    global connection
+
+    task = {
+        'task_id': 0,
+        'user_id': None,
+        'task_name': 'my task',
+        'date': datetime.datetime.now().replace(second=0, microsecond=0).isoformat(),
+        'repetition': 'daily',
+        'days': 'MO',
+        'months': 'JAN',
+        'facebook': {
+            'isActive': False,
+            'message': 'my message',
+            'files': ""
+        },
+        'instagram': {
+            'isActive': False,
+            'message': 'my message',
+            'files': ""
+        },
+        'twitter': {
+            'isActive': False,
+            'message': 'my message',
+            'files': ""
+        }
+    }
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM basicTask WHERE user_id=?", (email,))
     user_tasks = cursor.fetchall()
 
+    tasks_list = []
+
     if len(user_tasks) == 0:
-        return get_task_dict(true)
+        return task
 
-    for task in user_tasks:
-        print(task)
-        user_tasks_list.append(task_to_dict(task.task_id))
+    else:
+        for user_task in user_tasks:
+            task["task_id"] = user_task[0]
+            task["user_id"] = user_task[1]
+            task["name"] = user_task[2]
+            task["date"] = user_task[3]
+            task["repetition"] = user_task[4]
+            task["days"] = user_task[5]
+            task["months"] = user_task[6]
 
-    return user_tasks_list
+
+            if facebook_task_exist(task_id):
+                facebook_task = get_facebook_task(task_id)
+                task["facebook"]["isActive"] = True
+                task["facebook"]["message"] = facebook_message
+                task["facebook"]["files"] = facebook_files
+            if twitter_task_exist(task_id):
+                twitter_task = get_twitter_task(task_id)
+                task["twitter"]["isActive"] = True
+                task["twitter"]["message"] = twitter_message
+                task["twitter"]["files"] = twitter_files
+            if instagram_task_exist(task_id):
+                instagram_task = get_instagram_task(task_id)
+                task["instagram"]["isActive"] = True
+                task["instagram"]["message"] = instagram_message
+                task["instagram"]["files"] = instagram_files
+            tasks_list.append(task)
+        return tasks_list
 
 
 def create_task(task_id, user_id, name, date, repetition, days, months):
@@ -170,61 +232,3 @@ def get_today_custom_tasks(current_date, current_day, current_month):
 # def log_task_resume(user_id, task_id, status):
 #     db.log.insert_one({"user_id": user_id, "task_id": task_id, "status": status})
 
-
-# --------------- helpers -------------- #
-
-def get_task_dict(empty, task_id=0, user_id=None, name="my_task", date="2022-01-14T20:38", repetition="daily", days="MO", months="JAN"):
-    task = {
-        'task_id': 0,
-        'user_id': None,
-        'task_name': 'my task',
-        'date': datetime.datetime.now().replace(second=0, microsecond=0).isoformat(),
-        'repetition': 'daily',
-        'days': 'MO',
-        'months': 'JAN',
-        'facebook': {
-            'isActive': False,
-            'message': 'my message',
-            'files_list': ""
-        },
-        'instagram': {
-            'isActive': False,
-            'message': 'my message',
-            'files_list': ""
-        },
-        'twitter': {
-            'isActive': False,
-            'message': 'my message',
-            'files_list': ""
-        }
-    }
-
-    if empty:
-        return task
-
-    if not empty:
-        if basic_task_exist(task_id):
-            task["task_id"] = task_id
-            task["user_id"] = user_id
-            task["name"] = name
-            task["date"] = date
-            task["repetition"] = repetition
-            task["days"] = days
-            task["months"] = months
-
-            # if facebook_task_exist(task_id):
-            #     facebook_task = get_facebook_task(task_id)
-            #     task["facebook"]["isActive"] = True
-            #     task["facebook"]["message"] = facebook_message
-            #     task["facebook"]["files"] = facebook_files
-            # if twitter_task_exist(task_id):
-            #     twitter_task = get_twitter_task(task_id)
-            #     task["twitter"]["isActive"] = True
-            #     task["twitter"]["message"] = twitter_message
-            #     task["twitter"]["files"] = twitter_files
-            # if instagram_task_exist(task_id):
-            #     instagram_task = get_instagram_task(task_id)
-            #     task["instagram"]["isActive"] = True
-            #     task["instagram"]["message"] = instagram_message
-            #     task["instagram"]["files"] = instagram_files
-    return task

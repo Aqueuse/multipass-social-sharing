@@ -1,24 +1,24 @@
-<div class="facebook-task-block" id="facebook-{{ task.id }}-task-block" style="display: block">
-    <div class="resume-social-network" onclick="showHideThisTask({{ task.id }}, 'facebook')">
+<div class="facebook-task-block" id="facebook-{{ task.task_id }}-task-block" style="display: block">
+    <div class="resume-social-network" onclick="showHideThisTask({{ task.task_id }}, 'facebook')">
         <img src="/static/images/social_networks/facebook.svg" alt="facebook">
-        <img onclick="unactiveSocialNetwork({{task.id}}, 'facebook')" class="float-right" src="/static/images/close.svg" alt="remove facebook">
+        <img onclick="unactiveSocialNetwork({{task.task_id}}, 'facebook')" class="float-right" src="/static/images/close.svg" alt="remove facebook">
         <img class="float-right" src="/static/images/expand.svg" alt="expand">
     </div>
-    <div id="facebook-{{ task.id }}-parameters" style="display:block">
-        <input id="facebook-{{ task.id }}-ActivationFlag" type="hidden" name="facebook-activated" value="False">
+    <div id="facebook-{{ task.task_id }}-parameters" style="display:block">
+        <input id="facebook-{{ task.task_id }}-ActivationFlag" type="hidden" name="facebook-activated" value="False">
         <textarea name=facebook-message
                   class="task-field facebook-task-message">{{ task.facebook.message }}</textarea>
         <input
-                id="facebook-{{ task.id }}-images-input"
+                id="facebook-{{ task.task_id }}-images-input"
                 class="task-field"
                 type=file multiple="" name="facebook-files[]"
-                onchange="updateImagesList('facebook', '{{ task.id }}')">
+                onchange="updateImagesList('facebook', '{{ task.task_id }}')">
         <br>
-        <button type="button" id="remove-images-button" onclick="removeImagesFromList('facebook', '{{ task.id }}')">
+        <button type="button" id="remove-images-button" onclick="removeImagesFromList('facebook', '{{ task.task_id }}')">
             remove images
         </button>
-        <div id="facebook-{{ task.id }}-images-list">
-            {% for image in task.facebook.imagesList %}
+        <div id="facebook-{{ task.task_id }}-images-list">
+            {% for image in task.facebook.files %}
             <div class="task-image">{{ image }}</div>
             {% endfor %}
         </div>

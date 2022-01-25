@@ -15,20 +15,19 @@
 <script src="{{ baseURL }}/static/js/tasks.js"></script>
 
 {% for task in tasks_list %}
-{{ task. }}
 <div class="task-block">
     <div class=task-resume>
         <form class=time-task-form enctype="multipart/form-data" method="post">
-            <input type="hidden" name="task_id" value="{{ task.id }}">
+            <input type="hidden" name="id" value="{{ task.task_id }}">
             <div style="display: flex; flex-direction: row">
-                <a class=task-field id="task-{{ task.id }}-name-a" style="display: block">{{ task.taskname }}</a>
-                <textarea id="task-{{ task.id }}-name-area" class="task-field" style="resize: none; display: none" wrap="off" placeholder="task name" name="taskname">{{ task.taskname }}</textarea>
-                <img class="edit-task-name-image" onclick="editTaskname({{ task.id }})" src="/static/images/pen.svg">
+                <a class=task-field id="task-{{ task.task_id }}-name-a" style="display: block">{{ task.task_name }}</a>
+                <textarea id="task-{{ task.task_id }}-name-area" class="task-field" style="resize: none; display: none" wrap="off" placeholder="task name" name="taskname">{{ task.taskname }}</textarea>
+                <img class="edit-task-name-image" onclick="editTaskname({{ task.task_id }})" src="/static/images/pen.svg">
             </div>
             <input type=datetime-local name=date value="{{ task.date }}">
             <label>Repetition :
-                <select id="{{ task.id }}-repetition" name="repetition_frequency" onchange="showPeriods('{{ task.id }}')">
-                    <option value="{{ task.repetition.frequency }}" selected>current : {{ task.repetition.frequency }}</option>
+                <select id="{{ task.task_id }}-repetition" name="repetition_frequency" onchange="showPeriods('{{ task.task_id }}')">
+                    <option value="{{ task.repetition }}" selected>current : {{ task.repetition }}</option>
                     <option value="daily">daily</option>
                     <option value="weekly">weekly</option>
                     <option value="monthly">monthly</option>
@@ -36,43 +35,42 @@
                 </select>
             </label>
             <div class="period-selecter">
-                <div style="display:none;" id="{{ task.id }}-months">
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-JAN" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'JAN')">JAN</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-FEB" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'FEB')">FEB</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-MAR" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'MAR')">MAR</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-APR" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'APR')">APR</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-MAY" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'MAY')">MAY</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-JUN" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'JUN')">JUN</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-JUL" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'JUL')">JUL</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-AUG" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'AUG')">AUG</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-SEP" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'SEP')">SEP</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-OCT" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'OCT')">OCT</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-NOV" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'NOV')">NOV</span>
-                    <span style="background-color: lightsteelblue" id="{{ task.id }}-span-DEC" class="round-span" onclick="switchElement('{{ task.id }}', 'months', 'DEC')">DEC</span>
-                    <input id="{{ task.id }}-task-months" type=hidden name="months" value="{{ task.repetition.months }}">
+                <div style="display:none;" id="{{ task.task_id }}-months">
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-JAN" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'JAN')">JAN</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-FEB" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'FEB')">FEB</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-MAR" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'MAR')">MAR</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-APR" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'APR')">APR</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-MAY" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'MAY')">MAY</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-JUN" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'JUN')">JUN</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-JUL" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'JUL')">JUL</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-AUG" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'AUG')">AUG</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-SEP" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'SEP')">SEP</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-OCT" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'OCT')">OCT</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-NOV" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'NOV')">NOV</span>
+                    <span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-DEC" class="round-span" onclick="switchElement('{{ task.task_id }}', 'months', 'DEC')">DEC</span>
+                    <input id="{{ task.task_id }}-task-months" type=hidden name="months" value="{{ task.months }}">
                 </div>
             </div>
             <div class="period-selecter">
-                <div style="display:none;" id="{{ task.id }}-days">
-                    <label><span style="background-color: lightsteelblue" id="{{ task.id }}-span-MO" class="round-span" onclick="switchElement('{{ task.id }}', 'days', 'MO')">MO</span></label>
-                    <label><span style="background-color: lightsteelblue" id="{{ task.id }}-span-TU" class="round-span" onclick="switchElement('{{ task.id }}', 'days', 'TU')">TU</span></label>
-                    <label><span style="background-color: lightsteelblue" id="{{ task.id }}-span-WE" class="round-span" onclick="switchElement('{{ task.id }}', 'days', 'WE')">WE</span></label>
-                    <label><span style="background-color: lightsteelblue" id="{{ task.id }}-span-TH" class="round-span" onclick="switchElement('{{ task.id }}', 'days', 'TH')">TH</span></label>
-                    <label><span style="background-color: lightsteelblue" id="{{ task.id }}-span-FR" class="round-span" onclick="switchElement('{{ task.id }}', 'days', 'FR')">FR</span></label>
-                    <label><span style="background-color: lightsteelblue" id="{{ task.id }}-span-SA" class="round-span" onclick="switchElement('{{ task.id }}', 'days', 'SA')">SA</span></label>
-                    <label><span style="background-color: lightsteelblue" id="{{ task.id }}-span-SU" class="round-span" onclick="switchElement('{{ task.id }}', 'days', 'SU')">SU</span></label>
-                    <input id="{{ task.id }}-task-days" type=hidden name="days" value="{{ task.repetition.days }}">
+                <div style="display:none;" id="{{ task.task_id }}-days">
+                    <label><span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-MO" class="round-span" onclick="switchElement('{{ task.task_id }}', 'days', 'MO')">MO</span></label>
+                    <label><span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-TU" class="round-span" onclick="switchElement('{{ task.task_id }}', 'days', 'TU')">TU</span></label>
+                    <label><span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-WE" class="round-span" onclick="switchElement('{{ task.task_id }}', 'days', 'WE')">WE</span></label>
+                    <label><span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-TH" class="round-span" onclick="switchElement('{{ task.task_id }}', 'days', 'TH')">TH</span></label>
+                    <label><span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-FR" class="round-span" onclick="switchElement('{{ task.task_id }}', 'days', 'FR')">FR</span></label>
+                    <label><span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-SA" class="round-span" onclick="switchElement('{{ task.task_id }}', 'days', 'SA')">SA</span></label>
+                    <label><span style="background-color: lightsteelblue" id="{{ task.task_id }}-span-SU" class="round-span" onclick="switchElement('{{ task.task_id }}', 'days', 'SU')">SU</span></label>
+                    <input id="{{ task.task_id }}-task-days" type=hidden name="days" value="{{ task.days }}">
                 </div>
             </div>
         <button class="form-submit-button" formaction="/datetime/edit" >save</button>
         </form>
-        <button id="{{task.id}}-save-button" type="submit" formaction="task/update" style="display : inline-block">save</button>
         <button type="submit" formaction="task/delete">❌</button>
         <div class="resume-expand-logo">
             <div id="resume-social-networks-icons" style="display:block;">
             {% for task in tasks_list %}
                 {% if "facebook" in task %}
-                    <img class="resume-social-networks-icons" src="/static/images/social_networks/facebook.svg">
+                    <img class="resume-social-networks-icons" src="/static/images/social_networks/facebook.svg" alt="facebook logo">
                 {% else %}
                     + <img class="resume-social-networks-icons" src="/static/images/social_networks/facebook.svg">
                 {% endif %}
@@ -90,8 +88,8 @@
             </div>
         </div>
         <br><br>
-            <button type="button" class="show-tasks-button" id="task-{{ task.id }}-button" onclick="showHideAllTasks('{{ task.id }}')">◁</button>
-        <div id="task-{{ task.id }}-expanded" class="task-expanded" style="display: none">
+            <button type="button" class="show-tasks-button" id="task-{{ task.task_id }}-button" onclick="showHideAllTasks('{{ task.task_id }}')">◁</button>
+        <div id="task-{{ task.task_id }}-expanded" class="task-expanded" style="display: none">
             {% include 'socialNetworks/facebookSubtask.html' %}
             {% include 'socialNetworks/instagramSubtask.html' %}
             {% include 'socialNetworks/twitterSubtask.html' %}
@@ -100,5 +98,3 @@
     {% endfor %}
 </div>
 {% endblock %}
-
-
