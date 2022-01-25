@@ -1,15 +1,8 @@
-function add_social_block() {
-    document.getElementById("paragraph").innerText = "hello proto !";
-}
-
-function remove_social_block() {
-    document.getElementById("paragraph").innerText = "hello proto !";
-}
-
-function add_sharing() {
-    document.getElementById("paragraph").innerText = "hello proto !";
-}
-
-function remove_sharing() {
-    document.getElementById("paragraph").innerText = "hello proto !";
+function showHidePassword() {
+  var password_area = document.getElementById("passwordAreaId");
+  if (password_area.type === "password") {
+    password_area.type = "text";
+  } else {
+    password_area.type = "password";
+  }
 }

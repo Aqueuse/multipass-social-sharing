@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block navigation %}{% endblock %}
+
+{% block content %}
+<script src="{{ baseURL }}/static/js/script.js"></script>
+
+    <div class="pageContainer" id="container">
+    <form action="/register" method="post" id="formLogin">
+        <div>
+            <h3>Creation du compte</h3>
+            <label for="emailAreaId"></label>
+            <input
+                    type="text" class="identifiantArea"
+                    id="emailAreaId" name="email"
+                    placeholder="email" autocomplete="email"
+            />
+            <br>
+            <br>
+            <label for="passwordAreaId"></label>
+            <input
+                    type="password" class="passwordArea"
+                    id="passwordAreaId" name="password"
+                    placeholder="Password"
+            />
+            <img src="../static/images/eye.svg" alt="password visibility" onclick="showHidePassword()">
+            <br>
+            <br>
+            <input class="loginBtn" type="submit" value="create account"/>
+        </div>
+    </form>
+</div>
+{% endblock %}

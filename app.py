@@ -7,7 +7,7 @@ from views.tasks import tasks_blueprint, basic_task_create_blueprint,\
     basic_task_edit_blueprint, basic_task_delete_blueprint, \
     social_network_task_create_blueprint, social_network_task_edit_blueprint, \
     social_network_task_delete_blueprint
-from views.userAccount import user_account_blueprint
+from views.userManagement import user_account_blueprint, user_account_create_blueprint, user_account_edit_blueprint
 from flask import Flask
 
 from settings import UPLOAD_FOLDER, AUTHORIZED_FILES_TYPE, SECRET
@@ -30,7 +30,10 @@ settings.SECRET = str(app.config.get('SECRET_KEY'))
 app.register_blueprint(home_blueprint)
 app.register_blueprint(login_blueprint)
 app.register_blueprint(logout_blueprint)
+
 app.register_blueprint(user_account_blueprint)
+app.register_blueprint(user_account_create_blueprint)
+app.register_blueprint(user_account_edit_blueprint)
 
 app.register_blueprint(tasks_blueprint)
 app.register_blueprint(basic_task_create_blueprint)

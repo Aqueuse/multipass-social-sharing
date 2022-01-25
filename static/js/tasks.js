@@ -54,7 +54,7 @@ function showHideThisTask(taskid, socialNetwork) {
 }
 
 function activeSocialNetwork(taskid, socialNetwork) {
-    document.getElementById("facebook-"+taskid+"-ActivationFlag").setAttribute("value", "True");
+    document.getElementById(socialNetwork+"-"+taskid+"-ActivationFlag").setAttribute("value", "True");
 
     let socialTask = document.getElementById(socialNetwork+"-"+taskid+"-task-block");
     socialTask.style.display = "block";
@@ -80,7 +80,7 @@ function unactiveSocialNetwork(taskid, socialNetwork) {
     let instagramTask = document.getElementById("instagram-"+taskid+"-task-block").style.display;
     let twitterTask = document.getElementById("twitter-"+taskid+"-task-block").style.display;
 
-    document.getElementById("facebook-"+taskid+"-ActivationFlag").setAttribute("value", "False");
+    document.getElementById(socialNetwork+"-"+taskid+"-ActivationFlag").setAttribute("value", "False");
 
     if (facebookTask == "none" && instagramTask == "none" && twitterTask == "none" ) {
         saveButton.style = "display: none;";
